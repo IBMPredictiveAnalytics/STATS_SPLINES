@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>STATS SPLINES Extension Command</title>
+
+<link rel="stylesheet" type="text/css" href="extsyntax.css" />
+
+
+
+
+
+</head>
+
+<body>
+<h1>STATS SPLINES Extension Command</h1>
+
+<p>The procedure calculates a basis for two types of splines or orthogonal polynomials and creates a new dataset containing the generated basis variables.  The dataset can be merged back into the input dataset.
+</p>
+<p>Splines and polynomials make it easy to estimate nonlinear effects of predictors in linear or logistic models. A cubic spline, one of the most common tools for formulating nonlinear relationships, is a piecewise cubic polynomial where the joins at each knot have continuous first and second derivatives. A natural cubic spline extrapolates linearly beyond boundary points, which are typically the range of the data.  Orthogonal polynomials are equivalent to adding ordinary polynomials in the variables, but the orthogonality makes it easy to test for the optimal degree.</p>
+
+<p>The challenge with splines is deciding where to put the knots, i. e., the join points of the piecewise polynomial segments.  Instead of specifying the knots directly, using this procedure you
+specify a degrees of freedom parameter in addition to the degree of the polynomial.  The procedure
+then places the knots at appropriate quantiles of the variable.  The number of knots is the difference
+between the degrees of freedom and the degree of the polynomial.  In addition, boundary knots can specify anchor points, by default, the endpoints of the data.</p>
+
+<p>Split files and the Statistics case weights are not supported by this procedure.
+Cases with missing values will have missing values for the calculated values for the two
+spline methods, but will cause the procedure to stop with orthogonal polynomials.</p>
+
+
+<div class="syntax">
+<p>STATS SPLINES 
+VARIABLES = <em>variable list</em><sup>&#42;</sup><br/>
+ID = <em>variable</em><br/>
+DATASET = <em>dataset</em><sup>&#42;</sup><br/>
+</p>
+<p>/TRANSFORMATION<br/>
+TYPE = <em>POLYSPLINE</em><sup>&#42;&#42;</sup> or  <em>NATURALSPLINE</em> or <em>ORTHOPOLY</em><br/>
+DEGREE = <em>integer</em><br/>
+DF = <em>integer</em></br>
+BOUNDS = <em>number number</em><br/>
+</p>
+<p>/OPTIONS<br/>
+OUTNAMES = <em>VARNAME</em><sup>&#42;&#42;</sup> or <em>FIXED</em><br/>
+PREFIX = <em>text</em><br/>
+DISPLAYKNOTS = NO<sup>&#42;&#42;</sup> or YES<br/>
+</p>
+
+
+<p>/HELP</p>
+
+<p><sup>&#42;</sup> Required<br/>
+<sup>&#42;&#42;</sup> Default</p>
+</div>
+<p>STATS SPLINES /HELP.  prints this information and does nothing else.</p>
+
+<pre class="example"><code>STATS SPLINES VARIABLES=x y z
+DATASET=splines
+/TRANSFORMATION TYPE=POLYSPLINE DF=5 DEGREE=3.
+</code></pre>
+<p>The <strong>VARIABLES</strong> keyword specifies the variables 
+for which splines or orthogonal polynomials are to be created.
+Each variable is processed independently.</p>
+<p><strong>ID</strong> specifies an optional ID variable
+to be written to the output
+dataset.  This will facilitate merging the results into the input dataset.  If no
+variable is specified, the id values will be sequential integers.
+
+In order to merge the datasets using the ID variable,
+the input dataset must be in the sort order of the ID variable.</p>
+<p><strong>DATASET</strong> specifies the dataset for the output.
+The dataset name must not already be in use.</p>
+
+<h2>TRANSFORMATION</h2>
+<p>This subcommand specifies the type of spline or orthogonal polynomials to create.</p>
+<p><strong>TYPE</strong> specifies the type.  <strong>POLYSPLINE</strong>
+specifies a spline of any order.  The default is cubic.  <strong>NATURALSPLINE</strong>
+specifies a natural spline of degree 3.  <strong>ORTHOPOLY</strong> specifies
+orthogonal polynomials, which do not have any knots.</p>
+<p><strong>DEGREE</strong> applies to POLYSPLINE and ORTHOPOLY and specifies the degree of 
+the polynomial.</p>
+<p><strong>DF</strong> specifies the degrees of freedom for either of the
+spline choices.  The difference between the degrees of freedom and the
+polynomial degree is the number of knots, so if
+that is zero, there will be no knots.</p>
+<p><strong>BOUNDS</strong> optionally specifies a pair of boundaries for the polynomial or natural spline.
+The default is the minimum and maximum of the data.
+</p>
+<h2>OPTIONS</h2>
+<p><strong>OUTNAMES</strong> specifies how to name the variables in the output dataset.
+Variable names can be based on the input variable names or use a fixed prefix.  For example, using the first option,
+a cubic spline for variable age and educ might produce variables age_X1, age_X2, age_X3, educ_X1, educ_X2, and educ_X3 .
+If a fixed prefix, for example, "spline", is used and there are multiple input variables, the
+names would be like spline_X1, spline_X2, spline_X3, spline_X1_1, spline_X2_1, and spline_X3_1.
+</p>
+</p>
+<p><strong>DISPLAYKNOTS</strong> specifies whether or not to display a table of knots for each variable.  The number of knots is
+always shown in the summary table.
+<h3>Acknowledgements</h3>
+<p>This procedure uses the R splines package.
+The specific package version is indicated in the procedure output.
+</p>
+
+<h3>Requirements</h3>
+This command requires the R Essentials.
+</p>
+<p>&copy; Portions Copyright IBM Corp. 1989, 2016</p>
+
+</body>
+
+</html>
+
