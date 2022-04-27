@@ -9,9 +9,9 @@ Description: This procedure creates a dataset of spline basis or ortho
  gonal polynomial variables.  It can create polynomial splines, natura
  l spllines, or orthogonal polynomials
 Author: JKP
-Version: 1.0.0
+Version: 1.0.1
 Product-Version: 22
 Date: 8/10/2016
 Categories: statistics
 Plugins: R
-R-Packages: splines
+R-Packages:
