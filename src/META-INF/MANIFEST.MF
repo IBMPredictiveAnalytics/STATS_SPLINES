@@ -1,4 +1,5 @@
 Name: STATS SPLINES
+Display-Name: Splines
 Dialog-Specs: STATS_SPLINES.spd
 Command-Specs: STATS_SPLINES.xml
 Code-Files: STATS_SPLINES.R
@@ -14,4 +15,4 @@ Product-Version: 22
 Date: 8/10/2016
 Categories: statistics
 Plugins: R
-R-Packages:
+Product-Version-Maximum: 99
