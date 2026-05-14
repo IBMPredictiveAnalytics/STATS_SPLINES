@@ -3,7 +3,7 @@
 # *
 # * IBM SPSS Products: Statistics Common
 # *
-# * (C) Copyright IBM Corp. 2016
+# * (C) Copyright IBM Corp. 2016, 2026
 # *
 # * US Government Users Restricted Rights - Use, duplication or disclosure
 # * restricted by GSA ADP Schedule Contract with IBM Corp. 
@@ -14,6 +14,7 @@
 
 # History
 # 31-jul-2016 Original Version
+# 22-apr=2026 correct Boundary.knots list
 
 
 gtxt <- function(...) {
@@ -34,6 +35,10 @@ dosplines = function(variables, id=NULL, dataset, transformation="polyspline",
   # Calculate splines or orthogonal polynomials
 
   setuplocalization("STATS_SPLINES")
+    # DEBUG
+    # sink(file="c:/temp/splineoutout.log", type="output")
+    # f = file("c:/temp/splinemsgs.log", open="w")
+    # sink(file=f, type="message")
   
   # A warnings proc name is associated with the regular output
   # (and the same omsid), because warnings/errors may appear in
@@ -84,12 +89,12 @@ dosplines = function(variables, id=NULL, dataset, transformation="polyspline",
       if (length(bounds) != 2) {
         warns$warn(gtxt("Boundary must specify two values"), dostop=TRUE)
       }
-      arglist["Boundary.knots"] = bounds
+      arglist[["Boundary.knots"]] = bounds
     }
   } else if (transformation == "naturalspline") {
     arglist = list(df=df)
     if (!is.null(bounds)) {
-      arglist["Boundary.knots"] = bounds
+      arglist[["Boundary.knots"]] = bounds
     }
   } else {
     # orthogonal polynomials
@@ -111,6 +116,10 @@ dosplines = function(variables, id=NULL, dataset, transformation="polyspline",
   displayresults(allargs, results, knotlist, warns)
   makedataset(dataset, results, warns)
   warns$display()
+  # DEBUG
+  # sink(file=NULL, type="output")
+  # sink(file=NULL, type="message")
+
 }
 
 checkdataset = function(dataset, warns) {

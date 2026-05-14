@@ -1,18 +1,16 @@
 Name: STATS SPLINES
 Display-Name: Splines
-Dialog-Specs: STATS_SPLINES.spd
+Dialog-Specs: STATS_SPLINES.cfe
 Command-Specs: STATS_SPLINES.xml
 Code-Files: STATS_SPLINES.R
-Misc-Files: markdown.html,basictests.sps,extsyntax.css,IBMdialogicon.p
- ng
+Misc-Files: extsyntax.css,IBMdialogicon.png,STATS_SPLINES.htm,basictes
+ ts.sps,markdown.html
 Summary: Create basis variables for various kinds of splines
-Description: This procedure creates a dataset of spline basis or ortho
- gonal polynomial variables.  It can create polynomial splines, natura
- l spllines, or orthogonal polynomials
-Author: JKP
-Version: 1.0.1
-Product-Version: 22
+Description: This command creates a dataset of splines for one or more
+  variables.  The splines can be polynomials, natural, or orthogonal
+Author: Jon K Peck
+Version: 1.0.2
+Product-Version: 24
 Date: 8/10/2016
-Categories: statistics
+Categories: spline polynomial
 Plugins: R
-Product-Version-Maximum: 99
