@@ -1,0 +1,109 @@
+<html>
+<head>
+<title>Splines and Orthogonal Polynomials</title>
+<STYLE TYPE="text/css"> 
+<!-- 
+
+H1 {font-weight:bold; color:#006699; font-family:Verdana, Arial, sans-serif;font-size:125%; }
+H2 {font-weight:bold; color:#006699; font-family:Verdana, Arial, sans-serif;font-size:110%; }
+TABLE {font-size:100%;font-family:Verdana, Arial, sans-serif;}
+
+/* paragraph tags */
+.step {text-indent: -1.3em; margin-left:1.3em; margin-top: 0px;}
+.menuselection {margin-left:10px}
+.bullet {list-style-type: disc;margin-top:12px; margin-left:36px; text-indent:-1em; }
+.codeblock {background-color: #ffffe6; display:block; margin-left:5px; padding:5px;font-family:"courier new",monospace; }
+
+/* inline tags */
+.code {font-family: Courier,fixed pitch;}                           /*** used to tag pieces of code (syntax, Python, R, HTML, etc.)   ***/
+.screen {font-weight:bold; color:#408080}                       /*** used refer to on-screen text ***/
+.name {font-style: italic}                                                       /*** used to tag names, such as variable names, file names, and so forth ***/
+.runinhead {font-weight: bold} 
+.superscript {vertical-align:super; font-size:80%}
+.subscript {vertical-align:sub; font-size:80%}
+.symbol {font-family: Symbol}
+
+--> 
+</STYLE>
+</head>
+<body>
+<h1>Splines and Orthogonal Polynomials</h1>
+<p>The procedure calculates a basis for two types of splines or orthogonal polynomials and creates a new dataset containing the generated basis variables.  The dataset can be merged back into the input dataset.
+</p>
+<p>Splines and polynomials make it easy to estimate nonlinear effects of predictors in linear or logistic models. A cubic spline, one of the most common tools for formulating nonlinear relationships, is a piecewise cubic polynomial where the joins at each knot have continuous first and second derivatives. A natural cubic spline extrapolates linearly beyond boundary points, which are typically the range of the data.  Orthogonal polynomials are equivalent to adding ordinary polynomials in the variables, but the orthogonality makes it easy to test for the optimal degree.</p>
+
+<p>The challenge with splines is deciding where to put the knots, i. e., the join points of the piecewise polynomial segments.  Instead of specifying the knots directly, using this procedure you
+specify a degrees of freedom parameter in addition to the degree of the polynomial.  The procedure
+then places the knots at appropriate quantiles of the variable.  The number of knots is the difference
+between the degrees of freedom and the degree of the polynomial.  In addition, boundary knots can specify anchor points, by default, the endpoints of the data.</p>
+
+<p>Split files and the Statistics case weights are not supported by this procedure.
+Cases with missing values will have missing values for the calculated values for the two
+spline methods, but will cause the procedure to stop with orthogonal polynomials.</p>
+
+<p><span class="runinhead">Variables to Transform</span> Specify the input variables
+for the calculations.  Each variable is processed independently.</p>
+
+<p><span class="runinhead">ID</span> Specify an id variable to be written to the
+dataset.  This will facilitate merging the results into the input dataset.  If no
+variable is specified, the id values will be sequential integers.</p>
+
+<p class="bullet">&bull;In order to merge the datasets using the ID variable,
+the input dataset must be in the sort order of the ID variable.</p>
+
+<p><span class="runinhead">Dataset</span> The output from the procedure is a single 
+dataset containing the calculated basis variables for all the input variables.  Specify a name for
+the dataset.</p>
+<p class="bullet">&bull;The dataset name must not already be in use.</p>
+
+
+<p><span class="runinhead">Output Names</span> Variable names in the output dataset
+can be based on the input variable names or use a fixed prefix.  For example, using the first option,
+a cubic spline for variable age and educ might produce variables age_X1, age_X2, age_X3, educ_X1, educ_X2, and educ_X3 .
+If a fixed prefix, for example, "spline", is used and there are multiple input variables, the
+names would be like spline_X1, spline_X2, spline_X3, spline_X1_1, spline_X2_1, and spline_X3_1.
+</p>
+<h2>Parameters</h2>
+<p>Choose the transformation type.  For the polynomial spline, specify the degree
+and the degrees of freedom.  The difference is the number of knots, so if
+that is zero, there will be no knots.  The natural spline is always cubic.
+For orthogonal polynomials, only the degree is specified as there are no knots.
+</p>
+<p><span class="runinhead">Boundaries</span> For the polynomial or natural spline,
+you can specify a pair of boundaries.  The default is the minimum and maximum of the data.
+</p>
+<p><span class="runinhead">Display table of knots for each variable</span> The number of knots is
+always shown in the summary table.  Check this box to display the knot values for each variable.</p>
+
+<h2>Merging the Output Dataset with the Input</h2>
+The output from this procedure is always a new dataset.  To merge it into
+the input dataset, use the following code.<br/>
+<p span="code">
+DATASET ACTIVE input.</br>
+MATCH FILES /FILE=outputds /FILE=* /BY id.</br></br>
+where input is the dataset name of the active dataset, 
+outputds is the output dataset name, and
+id is the name of the id variable.  Omit BY id
+if there is no id variable.
+Equivalently, use the Data > Merge Files > Add Variables
+menu item.  If using an id variable, the input dataset must
+be in its sort order.  If the output variables already exist
+in the input dataset, listing the output dataset first ensures
+that the new values will appear in the merged dataset.
+</p>
+
+<h2>Acknowledgements</h2>
+<p>This procedure uses the R splines package.
+The specific package version is indicated in the procedure output.
+</p>
+
+
+<h2>Requirements</h2>
+This command requires the R Essentials.
+</p>
+  <hr
+  <p style="font-family:Verdana, Arial, sans-serif;font-size:80%;">
+  © Portions Copyright IBM Corp. 2016</p>
+</body>
+</html>
+
